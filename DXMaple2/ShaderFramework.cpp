@@ -59,6 +59,7 @@ float gRotationY = 0.0f;
 // 시간변화량
 int static timeDelta = 0;
 
+static D3DXMATRIXA16 matView;
 //-----------------------------------------------------------------------
 // 프로그램 진입점/메시지 루프
 //-----------------------------------------------------------------------
@@ -165,13 +166,13 @@ void Update()
 		//
 		// Update: Update the camera.
 		//
-		OutputDebugString("메시지\n");
+		//OutputDebugString("메시지\n");
 
 		if (::GetAsyncKeyState('W') & 0x8000f)
 			TheCamera.walk(4.0f * timeDelta);
 
 		if (::GetAsyncKeyState('S') & 0x8000f)
-			TheCamera.walk(-4.0f * timeDelta);
+			TheCamera.walk(-4.0f * 0.1f);
 
 		if (::GetAsyncKeyState('A') & 0x8000f)
 			TheCamera.strafe(-4.0f * timeDelta);
@@ -186,28 +187,28 @@ void Update()
 			TheCamera.fly(-4.0f * timeDelta);
 
 		if (::GetAsyncKeyState(VK_UP) & 0x8000f)
-			TheCamera.pitch(1.0f * timeDelta);
+			TheCamera.pitch(-0.1f * timeDelta);
 
 		if (::GetAsyncKeyState(VK_DOWN) & 0x8000f)
-			TheCamera.pitch(-1.0f * timeDelta);
+			TheCamera.pitch(0.1f * timeDelta);
 
 		if (::GetAsyncKeyState(VK_LEFT) & 0x8000f)
-			TheCamera.yaw(-1.0f * timeDelta);
+			TheCamera.yaw(-0.1f * timeDelta);
 
 		if (::GetAsyncKeyState(VK_RIGHT) & 0x8000f)
-			TheCamera.yaw(1.0f * timeDelta);
+			TheCamera.yaw(0.1f * timeDelta);
 
 		if (::GetAsyncKeyState('N') & 0x8000f)
-			TheCamera.roll(1.0f * timeDelta);
+			TheCamera.roll(0.1f * timeDelta);
 
 		if (::GetAsyncKeyState('M') & 0x8000f)
-			TheCamera.roll(-1.0f * timeDelta);
+			TheCamera.roll(-0.1f * timeDelta);
 
 		// Update the view matrix representing the cameras 
 		// new position/orientation.
-		D3DXMATRIX V;
-		TheCamera.getViewMatrix(&V);
-		gpD3DDevice->SetTransform(D3DTS_VIEW, &V);
+		//D3DXMATRIX V;
+		TheCamera.getViewMatrix(&matView);
+		gpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
 
 		timeDelta = clock() - curTime;
 
@@ -243,15 +244,15 @@ void RenderScene()
 {
 	//뷰행렬을 만든다
 	// 뷰행렬을 만들 곳
-	D3DXMATRIXA16 matView;
+	//D3DXMATRIXA16 matView;
 	// 카메라의 현재 위치 정함
-	D3DXVECTOR3 vEyePt(0.0f, 0.0f, -200.0f);
+	//D3DXVECTOR3 vEyePt(0.0f, 0.0f, -200.0f);
 	// 카메라가 바라보는 위치 정함
-	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+	//D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
 	// 카메라의 위쪽을 가리키는 벡터
-	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+	//D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
 	// 뷰행렬을 만들어주는 함수 호출
-	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
+	//D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
 
 	// 투영행렬을 만든다.
 	// 부영행렬을 만들 곧
