@@ -98,11 +98,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="ShaderFramework.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="InitEverything.cpp" />
+    <ClCompile Include="Render.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
-    <ClInclude Include="ShaderFramework.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="InitEverything.h" />
+    <ClInclude Include="Render.h" />
+    <ClInclude Include="WinMain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

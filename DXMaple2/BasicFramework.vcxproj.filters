@@ -9,18 +9,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ShaderFramework.cpp">
+    <ClCompile Include="camera.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
+    <ClCompile Include="InitEverything.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ShaderFramework.h">
+    <ClInclude Include="camera.h">
       <Filter>h</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
+    <ClInclude Include="InitEverything.h">
+      <Filter>h</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>h</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>h</Filter>
+    </ClInclude>
+    <ClInclude Include="WinMain.h">
       <Filter>h</Filter>
     </ClInclude>
   </ItemGroup>
