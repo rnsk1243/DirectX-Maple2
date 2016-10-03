@@ -23,7 +23,7 @@
 #define WIN_HEIGHT		1200
 
 // 카메라 이동 속도
-#define CAMERA_SPEED 40
+#define CAMERA_SPEED 140
 // 카메라 회전 속도
 #define CAMERA_R 1.5f
 
@@ -97,8 +97,8 @@ public:
 		D3DXMatrixIdentity(&m_matView);
 
 		// 에셋 이름 초기화
-		m_redHouse = new nodeAssetName("house.png", "TextureMapping.fx", "house_non_left.x");
-		m_blueHouse = new nodeAssetName("blue_house.png", "TextureMapping.fx", "house_non_left.x");
+		m_redHouse = new nodeAssetName("house.png", "ToonShader_juhang.fx", "house_non_left.x");
+		m_blueHouse = new nodeAssetName("blue_house.png", "ToonShader_juhang.fx", "house_non_left.x");
 		
 		m_box0 = new nodeAssetName("box0.png", "TextureMapping.fx", "box_non_left.x");
 		m_box1 = new nodeAssetName("box1.png", "TextureMapping.fx", "box_non_left.x");

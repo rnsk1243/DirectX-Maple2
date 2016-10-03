@@ -140,6 +140,11 @@ void CRender::RenderGround(CObjList*& objList, D3DXMATRIXA16* View)
 
 void CRender::RenderRandomGround(CObjList*& objList, D3DXMATRIXA16* View, int floor, int* XRange, int* YRange)
 {
+	// 광원의 위치
+	D3DXVECTOR4				gWorldLightPosition = D3DXVECTOR4(500.0f, 500.0f, 500.0f, 1.0f);
+	// 표면의 색상
+	D3DXVECTOR4				gSurfaceColor = D3DXVECTOR4(1, 0.49804, 0, 1);
+
 	// 투영행렬을 만든다.
 	// 부영행렬을 만들 곧
 	D3DXMATRIXA16 matProjection;
@@ -151,11 +156,31 @@ void CRender::RenderRandomGround(CObjList*& objList, D3DXMATRIXA16* View, int fl
 	for (int i = 0; i < objList->getCount(); i++)
 	{
 
-		
-
 		nodeObj* temp = objList->getObj(i);
+
+		LPD3DXEFFECT gpShader = temp->Shader;
+		LPD3DXMESH gpModel = temp->gpModel;
+		LPDIRECT3DTEXTURE9 gpTextureDM = temp->gpTextureDM;
+		D3DXMATRIXA16 matWorldViewProjection;
 		if (temp->_name->texture == "house.png" || temp->_name->texture == "blue_house.png")
 		{
+			// 월드행렬의 역행렬을 구한다.
+			D3DXMATRIXA16 matInvWorld;
+			D3DXMatrixTranspose(&matInvWorld, &matWorld);
+
+			// 월드/뷰/투영행렬을 미리 곱한다.
+			D3DXMATRIXA16 matWorldView;
+			
+			D3DXMatrixMultiply(&matWorldView, &matWorld, View);
+			D3DXMatrixMultiply(&matWorldViewProjection, &matWorldView, &matProjection);
+
+			// 쉐이더 전역변수들을 설정
+			gpShader->SetMatrix("gWorldViewProjectionMatrix", &matWorldViewProjection);
+			gpShader->SetMatrix("gInvWorldMatrix", &matInvWorld);
+
+			gpShader->SetVector("gWorldLightPosition", &gWorldLightPosition);
+			gpShader->SetVector("gSurfaceColor", &gSurfaceColor);
+
 			D3DXMatrixTranslation(&matWorld, XRange[i] * 90.0f, floor * 72.f, YRange[i] * 90.0f);
 		}
 		else if (temp->_name->texture == "tree_blue.png" || temp->_name->texture == "tree_bora.png" || temp->_name->texture == "tree_green.png")
@@ -168,9 +193,7 @@ void CRender::RenderRandomGround(CObjList*& objList, D3DXMATRIXA16* View, int fl
 		}
 		
 
-		LPD3DXEFFECT gpShader = temp->Shader;
-		LPD3DXMESH gpModel = temp->gpModel;
-		LPDIRECT3DTEXTURE9 gpTextureDM = temp->gpTextureDM;
+		
 
 		gpShader->SetMatrix("gWorldMatrix", &matWorld);
 
