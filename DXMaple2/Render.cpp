@@ -11,8 +11,8 @@ CRender::~CRender()
 {
 }
 
-// 3D 물체등을 그린다.
-void CRender::RenderScene(LPD3DXEFFECT& gpTextureMappingShader, LPD3DXMESH& gpSphere, LPDIRECT3DTEXTURE9& gpEarthDM)
+// 3D 물체등을 그린다. 
+void CRender::RenderScene(LPD3DXEFFECT& gpShader, LPD3DXMESH& gpModel, LPDIRECT3DTEXTURE9& gpTextureDM)
 {
 	/*
 	//뷰행렬을 만든다
@@ -66,24 +66,24 @@ void CRender::RenderScene(LPD3DXEFFECT& gpTextureMappingShader, LPD3DXMESH& gpSp
 	*/
 	// .fx파일에서 sampler2D DiffuseSampler 바로 위에 texture 데이터형으로 선언된 변수를 찾아
 	// 첫번째 매개변수로 넣어준다.
-	gpTextureMappingShader->SetTexture("DiffuseMap_Tex", gpEarthDM);
+	gpShader->SetTexture("DiffuseMap_Tex", gpTextureDM);
 	// 패스의 수를 저장할 변수 선언
 	UINT numPasses;
 	// 패스의 수를 구함
-	gpTextureMappingShader->Begin(&numPasses, NULL);
+	gpShader->Begin(&numPasses, NULL);
 	{
 		// 패스 만큼 물체를 그림.
 		for (UINT i = 0;i < numPasses;++i)
 		{
-			gpTextureMappingShader->BeginPass(i);
+			gpShader->BeginPass(i);
 			{
-				// 구체를 그린다.
-				gpSphere->DrawSubset(0);
+				// 모델를 그린다.
+				gpModel->DrawSubset(0);
 			}
-			gpTextureMappingShader->EndPass();
+			gpShader->EndPass();
 		}
 	}
-	gpTextureMappingShader->End();
+	gpShader->End();
 }
 
 // 디버그 정보 등을 출력.

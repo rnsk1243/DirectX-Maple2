@@ -64,7 +64,7 @@ bool CGameManager::LoadMap()
 
 bool CGameManager::LoadUI()
 {
-	m_render.RenderInfo(m_gpFont, "g", 800, 600);
+	m_render.RenderInfo(m_gpFont, "MapleStory2", WIN_HEIGHT, WIN_HEIGHT);
 	return false;
 }
 
@@ -74,47 +74,49 @@ void CGameManager::CameraUpdate(float deltaTime)
 
 	if (m_gpD3DDevice)
 	{
-		
+		// 앞으로
 		if (::GetAsyncKeyState('W') & 0x8000f)
-			m_camera.walk(12.0f * deltaTime);
-
+			m_camera.walk(CAMERA_SPEED * deltaTime);
+		// 뒤로
 		if (::GetAsyncKeyState('S') & 0x8000f)
-			m_camera.walk(-12.0f * deltaTime);
-
+			m_camera.walk(-CAMERA_SPEED * deltaTime);
+		// 왼쪽
 		if (::GetAsyncKeyState('A') & 0x8000f)
-			m_camera.strafe(-12.0f * deltaTime);
-
+			m_camera.strafe(-CAMERA_SPEED * deltaTime);
+		// 오른쪽
 		if (::GetAsyncKeyState('D') & 0x8000f)
-			m_camera.strafe(12.0f * deltaTime);
-
+			m_camera.strafe(CAMERA_SPEED * deltaTime);
+		// 수직상승
 		if (::GetAsyncKeyState('R') & 0x8000f)
-			m_camera.fly(12.0f * deltaTime);
-
+			m_camera.fly(CAMERA_SPEED * deltaTime);
+		// 하강
 		if (::GetAsyncKeyState('F') & 0x8000f)
-			m_camera.fly(-12.0f * deltaTime);
-
+			m_camera.fly(-CAMERA_SPEED * deltaTime);
+		// 위로 올려다 보기
 		if (::GetAsyncKeyState(VK_UP) & 0x8000f)
-			m_camera.pitch(-1.f * deltaTime);
-
+			m_camera.pitch(-CAMERA_R * deltaTime);
+		// 아래로 내려 보기
 		if (::GetAsyncKeyState(VK_DOWN) & 0x8000f)
-			m_camera.pitch(1.f * deltaTime);
-
+			m_camera.pitch(CAMERA_R * deltaTime);
+		// 왼쪽 보기
 		if (::GetAsyncKeyState(VK_LEFT) & 0x8000f)
-			m_camera.yaw(-1.f * deltaTime);
-
+			m_camera.yaw(-CAMERA_R * deltaTime);
+		// 오른쪽 보기
 		if (::GetAsyncKeyState(VK_RIGHT) & 0x8000f)
-			m_camera.yaw(1.f * deltaTime);
-
+			m_camera.yaw(CAMERA_R * deltaTime);
+		// 왼쪽 회전
 		if (::GetAsyncKeyState('N') & 0x8000f)
-			m_camera.roll(1.f * deltaTime);
-
+			m_camera.roll(CAMERA_R * deltaTime);
+		// 오른쪽 회전
 		if (::GetAsyncKeyState('M') & 0x8000f)
-			m_camera.roll(-1.f * deltaTime);
+			m_camera.roll(-CAMERA_R * deltaTime);
 
 		// Update the view matrix representing the cameras 
 		// new position/orientation.
 		//D3DXMATRIX V;
+		// 뷰행렬 저장
 		m_camera.getViewMatrix(&m_matView);
+		// 뷰행렬 적용
 		m_gpD3DDevice->SetTransform(D3DTS_VIEW, &m_matView);
 	}
 }

@@ -19,23 +19,42 @@
 #define WIN_WIDTH		800
 #define WIN_HEIGHT		600
 
+// 카메라 이동 속도
+#define CAMERA_SPEED 20
+// 카메라 회전 속도
+#define CAMERA_R 1
+
+
+
 class CGameManager
 {
+	// 모든 초기화를 담당하는 객체
 	CInitEverything m_Init;
+	// 모든 렌더를 담당하는 객체
 	CRender m_render;
+	// 카메라 객체
 	Camera m_camera;
-
+	// 뷰변환 행렬
 	D3DXMATRIXA16 m_matView;
-
+	// 윈도우 핸들
 	HWND m_hWnd;
+	// D3D 장치
 	LPDIRECT3DDEVICE9 m_gpD3DDevice;
+	// 폰트
 	ID3DXFont* m_gpFont;
+	// D3D 장치 생성에 필요
 	LPDIRECT3D9 m_gpD3D;
+	// 텍스쳐
 	LPDIRECT3DTEXTURE9 m_gpTextureDM;
+	// 쉐이더
 	LPD3DXEFFECT m_Shader;
+	// 모델
 	LPD3DXMESH m_gpModel;
 
-	bool m_Read;
+
+
+	// 모든 초기화가 제대로 이루어 졌나?
+	bool m_IsRead;
 
 	const char* m_texture = "house.png";
 	const char* m_shader = "TextureMapping.fx";
@@ -52,9 +71,9 @@ public:
 		
 		
 		
-		m_Read = m_Init.InitD3D(m_hWnd, m_gpD3D, m_gpD3DDevice);
-		m_Read = m_Init.LoadAssets(m_gpTextureDM, m_Shader, m_gpModel, m_texture, m_shader, m_xFile, m_gpD3DDevice);
-		m_Read = m_Init.LoadFont(m_gpD3DDevice, m_gpFont);
+		m_IsRead = m_Init.InitD3D(m_hWnd, m_gpD3D, m_gpD3DDevice);
+		m_IsRead = m_Init.LoadAssets(m_gpTextureDM, m_Shader, m_gpModel, m_texture, m_shader, m_xFile, m_gpD3DDevice);
+		m_IsRead = m_Init.LoadFont(m_gpD3DDevice, m_gpFont);
 	}
 	~CGameManager();
 
@@ -65,6 +84,6 @@ public:
 	void Cleanup();
 	void RenderFrame();
 
-	bool getRead() { return m_Read; }
+	bool getRead() { return m_IsRead; }
 };
 
