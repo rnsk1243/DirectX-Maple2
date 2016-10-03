@@ -55,7 +55,7 @@ bool CGameManager::LoadMap()
 	m_Shader->SetMatrix("gProjectionMatrix", &matProjection);
 	// .fx파일에서 sampler2D DiffuseSampler 바로 위에 texture 데이터형으로 선언된 변수를 찾아
 	// 첫번째 매개변수로 넣어준다.
-	m_Shader->SetTexture("DiffuseMap_Tex", m_gpTextureDM);
+	//m_Shader->SetTexture("DiffuseMap_Tex", m_gpTextureDM);
 
 	m_render.RenderScene(m_Shader, m_gpModel, m_gpTextureDM);
 

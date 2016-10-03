@@ -100,6 +100,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="InitEverything.cpp" />
+    <ClCompile Include="ObjList.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -107,6 +108,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="InitEverything.h" />
+    <ClInclude Include="ObjList.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="WinMain.h" />
   </ItemGroup>

@@ -66,6 +66,7 @@ public:
 		m_hWnd = hWnd; m_gpD3DDevice = gpD3DDevice; m_gpFont = gpFont;
 		m_gpD3D = gpD3D; m_gpTextureDM = gpTextureDM; m_Shader = gpShader;
 		m_gpModel = gpModel;
+		// m_matView 행렬 초기화 단위행렬로
 		D3DXMatrixIdentity(&m_matView);
 
 		
