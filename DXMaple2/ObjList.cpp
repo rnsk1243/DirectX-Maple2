@@ -11,6 +11,19 @@ CObjList::~CObjList()
 {
 }
 
+nodeObj * CObjList::getObj(int pos)
+{
+	nodeObj* curNode = m_head;
+	if (isEmpty())return nullptr;
+	if (pos<0 || pos>m_count - 1)
+		return nullptr;
+
+	for (int i = 0; i < pos; i++)
+		curNode = curNode->next;
+
+	return curNode;
+}
+
 void CObjList::insertObject(int pos, LPDIRECT3DTEXTURE9 gpTextureDM, LPD3DXEFFECT Shader, LPD3DXMESH gpModel, nodeAssetName * name)
 {
 	nodeObj* curNode = m_head;

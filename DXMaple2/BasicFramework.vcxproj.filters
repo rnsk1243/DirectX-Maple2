@@ -24,7 +24,9 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
-    <ClCompile Include="ObjList.cpp" />
+    <ClCompile Include="ObjList.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -42,6 +44,8 @@
     <ClInclude Include="WinMain.h">
       <Filter>h</Filter>
     </ClInclude>
-    <ClInclude Include="ObjList.h" />
+    <ClInclude Include="ObjList.h">
+      <Filter>h</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -153,6 +153,27 @@ bool CInitEverything::LoadAssets(LPDIRECT3DTEXTURE9& gpTextureDM, LPD3DXEFFECT& 
 	return true;
 }
 
+bool CInitEverything::LoadAssets(nodeObj*& obj, LPDIRECT3DDEVICE9& gpD3DDevice)
+{
+	// 텍스처 로딩
+	// 원본주소에 텍스쳐를 넣는다.
+	obj->gpTextureDM = LoadTexture(obj->_name->texture, gpD3DDevice);
+	if (!obj->gpTextureDM)
+		return false;
+
+	// 쉐이더 로딩
+	obj->Shader = LoadShader(obj->_name->shader, gpD3DDevice);
+	if (!obj->Shader)
+		return false;
+
+	// 모델 로딩
+	obj->gpModel = LoadModel(obj->_name->xFile, gpD3DDevice);
+	if (!obj->gpModel)
+		return false;
+
+	return true;
+}
+
 // UI에 사용할 글자를 만든다.
 bool CInitEverything::LoadFont(LPDIRECT3DDEVICE9& gpD3DDevice, ID3DXFont*& gpFont)
 {

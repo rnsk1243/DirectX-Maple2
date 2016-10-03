@@ -24,6 +24,14 @@ struct nodeObj
 		_name = name;
 		next = nullptr;
 	}
+	nodeObj(nodeAssetName* name)
+	{
+		gpTextureDM = NULL;
+		Shader = NULL;
+		gpModel = NULL;
+		_name = name;
+		next = nullptr;
+	}
 	// 텍스쳐
 	LPDIRECT3DTEXTURE9 gpTextureDM;
 	// 쉐이더
@@ -47,6 +55,11 @@ public:
 	{ 
 		insertObject(0, gpTextureDM, Shader, gpModel, name); 
 	}
+	void pushFront(nodeObj* obj)
+	{
+		insertObject(0, obj->gpTextureDM, obj->Shader, obj->gpModel, obj->_name);
+	}
+	nodeObj* getObj(int pos);
 	void insertObject(int pos, LPDIRECT3DTEXTURE9 gpTextureDM, LPD3DXEFFECT Shader, LPD3DXMESH gpModel, nodeAssetName* name);
 	void removeObject(int pos);
 	bool isEmpty() { return m_head == nullptr; }

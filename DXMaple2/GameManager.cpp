@@ -25,9 +25,9 @@ bool CGameManager::LoadMap()
 
 	// 투영행렬을 만든다.
 	// 부영행렬을 만들 곧
-	D3DXMATRIXA16 matProjection;
+	//D3DXMATRIXA16 matProjection;
 	// 투영행렬을 만들어주는 함수 호출
-	D3DXMatrixPerspectiveFovLH(&matProjection, FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
+	//D3DXMatrixPerspectiveFovLH(&matProjection, FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
 	/*
 	// 프레임마다 0.2도씩 회전을 시킨다.
 	gRotationY += 0.2f * PI / 180.0f; //(0.4f * 2PI / 360.0f;)
@@ -40,9 +40,9 @@ bool CGameManager::LoadMap()
 	// 월드행렬을 만든다.
 	// 뷰행령,투영행렬과 달리 각 물체마다 월드행렬을 만들어줘야함.(각 물체마다 위치,크기가 다르므로)
 	// 여기서는 월드의 원점(0,0,0)에 물체를 놓아둔다고 가정하므로 단위행렬로 놔둠.
-	D3DXMATRIXA16 matWorld;
+	//D3DXMATRIXA16 matWorld;
 	// 단위행렬
-	D3DXMatrixIdentity(&matWorld);
+	//D3DXMatrixIdentity(&matWorld);
 	// gRotationY 회전각 만큼 돌린 월드좌표를 matWorld에 저장함.
 	//D3DXMatrixRotationY(&matWorld, gRotationY);
 
@@ -50,22 +50,32 @@ bool CGameManager::LoadMap()
 	// SetMatrix() 함수를 이용하여 뷰행렬,투영행렬,월드행렬을 셰이더에 전달해준다.
 	// SetMatrix(렌더몽키에서 전역변수로 선언했던 변수이름과 완전히 일치해야함, 각종행렬)
 	
-	m_Shader->SetMatrix("gWorldMatrix", &matWorld);
-	m_Shader->SetMatrix("gViewMatrix", &m_matView);
-	m_Shader->SetMatrix("gProjectionMatrix", &matProjection);
+	//m_ObjRedHouse->Shader->SetMatrix("gWorldMatrix", &matWorld);
+	//m_ObjRedHouse->Shader->SetMatrix("gViewMatrix", &m_matView);
+	//m_ObjRedHouse->Shader->SetMatrix("gProjectionMatrix", &matProjection);
 	// .fx파일에서 sampler2D DiffuseSampler 바로 위에 texture 데이터형으로 선언된 변수를 찾아
 	// 첫번째 매개변수로 넣어준다.
 	//m_Shader->SetTexture("DiffuseMap_Tex", m_gpTextureDM);
 
-	m_render.RenderScene(m_Shader, m_gpModel, m_gpTextureDM);
+	//m_render.RenderScene(m_RedHouseList);
 
-	return false;
+	//D3DXMatrixTranslation(&matWorld, 200.f, 0.f, 0.f);
+
+	//m_ObjBlueHouse->Shader->SetMatrix("gWorldMatrix", &matWorld);
+	//m_ObjBlueHouse->Shader->SetMatrix("gViewMatrix", &m_matView);
+	//m_ObjBlueHouse->Shader->SetMatrix("gProjectionMatrix", &matProjection);
+
+	//m_render.RenderScene(m_BlueHouseList);
+
+	m_render.RenderGround(m_BoxRound, &m_matView);
+	m_render.RenderRandomGround(m_floor1, &m_matView, 1, xRange, yRange);
+	return true;
 }
 
 bool CGameManager::LoadUI()
 {
 	m_render.RenderInfo(m_gpFont, "MapleStory2", WIN_HEIGHT, WIN_HEIGHT);
-	return false;
+	return true;
 }
 
 void CGameManager::CameraUpdate(float deltaTime)
@@ -135,7 +145,7 @@ void CGameManager::Update()
 	lastTime = currTime;
 }
 
-void CGameManager::Cleanup()
+void CGameManager::Cleanup(CObjList* obj)
 {
 	// 폰트를 release 한다.
 	if (m_gpFont)
@@ -144,26 +154,31 @@ void CGameManager::Cleanup()
 		m_gpFont = NULL;
 	}
 
-	// 모델을 release 한다.
-	if (m_gpModel)
+	for (int i = 0; i<obj->getCount(); i++)
 	{
-		m_gpModel->Release();
-		m_gpModel = NULL;
+		// 모델을 release 한다.
+		if (obj->getObj(i)->gpModel)
+		{
+			obj->getObj(i)->gpModel->Release();
+			obj->getObj(i)->gpModel = NULL;
+		}
+
+		// 쉐이더를 release 한다.
+		if (obj->getObj(i)->Shader)
+		{
+			obj->getObj(i)->Shader->Release();
+			obj->getObj(i)->Shader = NULL;
+		}
+
+		// 텍스처를 release 한다.
+		if (obj->getObj(i)->gpTextureDM)
+		{
+			obj->getObj(i)->gpTextureDM->Release();
+			obj->getObj(i)->gpTextureDM = NULL;
+		}
 	}
 
-	// 쉐이더를 release 한다.
-	if (m_Shader)
-	{
-		m_Shader->Release();
-		m_Shader = NULL;
-	}
-
-	// 텍스처를 release 한다.
-	if (m_gpTextureDM)
-	{
-		m_gpTextureDM->Release();
-		m_gpTextureDM = NULL;
-	}
+	
 
 	// D3D를 release 한다.
 	if (m_gpD3DDevice)

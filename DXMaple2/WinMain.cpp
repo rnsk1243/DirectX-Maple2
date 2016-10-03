@@ -2,24 +2,12 @@
 #include<Windows.h>
 #include"GameManager.h"
 #include"WinMain.h"
-
 // 프로그램 이름
 const char* gAppName = "MapleStory2";
 
-// D3D 관련
-LPDIRECT3D9             gpD3D = NULL;				// D3D
-LPDIRECT3DDEVICE9       gpD3DDevice = NULL;			// D3D 장치
 
-ID3DXFont*              gpFont = NULL;	// 폰트
 
-// 모델
-LPD3DXMESH gpModel = NULL;
 
-// 쉐이더
-LPD3DXEFFECT gpShader = NULL;
-
-// 텍스처
-LPDIRECT3DTEXTURE9 gpTextureDM = NULL;
 
 CGameManager* GM;
 
@@ -51,7 +39,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 	UpdateWindow(hWnd);
 
 	// 게임 매니져 객체 초기화(모든 초기화가 이루어짐)
-	GM = new CGameManager(hWnd, gpD3DDevice, gpFont, gpD3D, gpTextureDM, gpShader, gpModel);
+	GM = new CGameManager(hWnd);
 
 	// 잘 초기화 되었나?
 	if (!GM->getRead())
@@ -70,6 +58,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 		else // 메시지가 없으면 게임을 업데이트하고 장면을 그린다
 		{
 			GM->Update();
+			
 		}
 	}
 
@@ -87,7 +76,8 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_DESTROY:
-		GM->Cleanup();
+		GM->Cleanup(GM->getRedHouseObjList());
+		GM->Cleanup(GM->getBlueHouseObjList());
 		PostQuitMessage(0);
 		return 0;
 	}

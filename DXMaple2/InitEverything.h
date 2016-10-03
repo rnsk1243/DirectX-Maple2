@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 #include<Windows.h>
 #include <stdio.h>
+#include"ObjList.h"
 
 class CInitEverything
 {
@@ -18,6 +19,7 @@ public:
 	// 에셋 로드(쉐이더,매핑맵,모델)
 	bool LoadAssets(LPDIRECT3DTEXTURE9& gpTextureDM, LPD3DXEFFECT& gpShader, LPD3DXMESH& gpModel,
 		const char* texture, const char* shader, const char* model, LPDIRECT3DDEVICE9& gpD3DDevice);
+	bool LoadAssets(nodeObj*& obj, LPDIRECT3DDEVICE9& gpD3DDevice);
 	// UI 폰트 만들기
 	bool LoadFont(LPDIRECT3DDEVICE9& gpD3DDevice, ID3DXFont*& gpFont);
 
